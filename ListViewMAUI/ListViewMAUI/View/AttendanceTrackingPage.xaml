@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
+             xmlns:local="clr-namespace:ListViewMAUI"
+             Title="Attendance Tracking Page"             
+             x:Class="ListViewMAUI.AttendanceTrackingPage">
+   
+    <ContentPage.BindingContext>
+        <local:ViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid>
+            <syncfusion:SfScheduler TappedCommand="{Binding SchedulerTappedCommand}" 
+                                    View="Month"                   
+                                    ViewChangedCommand="{Binding SchedulerViewChangedCommand}"
+                                    AppointmentsSource="{Binding Appointments}">
+                <syncfusion:SfScheduler.MonthView>
+                    <syncfusion:SchedulerMonthView>
+                    <syncfusion:SchedulerMonthView.AppointmentTemplate>
+                        <DataTemplate>
+                            <Grid Background="{Binding Background}">
+                                <Label Text="{Binding Subject}" 
+                                    TextColor="{Binding TextColor}" 
+                                    HorizontalOptions="Center" 
+                                    VerticalOptions="Center" 
+                                    FontFamily="Bold"/>
+                            </Grid>
+                        </DataTemplate>
+                    </syncfusion:SchedulerMonthView.AppointmentTemplate>
+                    </syncfusion:SchedulerMonthView>
+                </syncfusion:SfScheduler.MonthView>
+                <syncfusion:SfScheduler.AppointmentMapping>
+                    <syncfusion:SchedulerAppointmentMapping                   
+                Subject="EventName"
+                StartTime="From"
+                EndTime="To"
+                Background="Background"
+                IsAllDay="IsAllDay"
+                StartTimeZone="StartTimeZone"
+                EndTimeZone="EndTimeZone"
+                TextColorMapping="TextColor"/>
+                </syncfusion:SfScheduler.AppointmentMapping>
+            </syncfusion:SfScheduler>
+
+            <Button Margin="20" 
+                    Text="Show Report"
+                    CornerRadius="20" 
+                    HeightRequest="40" 
+                    WidthRequest="120"  
+                    Background="{StaticResource Primary}"                                     
+                    VerticalOptions="End" 
+                    HorizontalOptions="End" 
+                    Command="{Binding ShowReportCommand}"
+                    />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

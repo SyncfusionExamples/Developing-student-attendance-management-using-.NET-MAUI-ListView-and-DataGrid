@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:local="clr-namespace:ListViewMAUI"
+             Title="Marking Attendance Page"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             x:Class="ListViewMAUI.MainPage">
+
+            <syncfusion:SfListView x:Name="listView"
+                                    ItemsSource="{Binding Students}" 
+                                    HeaderSize="70"
+                                    IsStickyHeader="True"
+                                    FooterSize="60"
+                                    SelectionBackground="Transparent"
+                                    IsStickyFooter="True"
+                                    ItemSize="72">
+                <syncfusion:SfListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="grid" Margin="5" RowDefinitions="*,*"
+                                ColumnDefinitions="100,*,Auto">
+                            <Label Text="Profile"     
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"                         
+                                    Grid.Column="0" 
+                                    FontAttributes="Bold"
+                                    FontSize="Medium"/>
+
+                            <Label VerticalOptions="Center"
+                                    HorizontalOptions="Center"                   
+                                    Text="Student Name / Roll Number"                                              
+                                    Grid.Column="1"              
+                                    FontAttributes="Bold"
+                                    FontSize="Medium" />
+                            <Label  FontSize="Medium"  Grid.Column="2"   FontAttributes="Bold"          
+                Text="Status"/>
+                    
+                            <editors:SfComboBox Placeholder="Mark All" Grid.Row="1" Grid.Column="2" HorizontalOptions="End" IsClearButtonVisible="False" ItemsSource="{Binding BindingContext.Status, Source={x:Reference listView}}" SelectedItem="{Binding BindingContext.SelectedItem, Source={x:Reference listView}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfListView.HeaderTemplate>
+        
+                <syncfusion:SfListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:StudentInfo">
+                        <Grid x:Name="grid" ColumnDefinitions="100,*,Auto">
+                            <Image Source="{Binding Image}"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
+
+                            <Grid Grid.Column="1" VerticalOptions="Center" RowDefinitions="Auto, Auto">
+                                <Label LineBreakMode="TailTruncation"
+                            Text="{Binding Name}"
+                            FontFamily="Roboto-Regular"
+                            CharacterSpacing="0.15"
+                            FontSize="{OnPlatform Default=16,WinUI=14}" />
+
+                                <Label Grid.Row="1"
+                            Grid.Column="0"
+                            LineBreakMode="NoWrap"
+                            FontFamily="Roboto-Regular"
+                            CharacterSpacing="0.25"
+                            Text="{Binding RollNum}"
+                            Margin="0,2,0,0"
+                            FontSize="14"
+                            Opacity="0.8" />
+                            </Grid>
+
+                            <core:SfChipGroup Grid.Column="2"   
+                                                Margin="10"
+                                                ChipType="Choice"
+                                                VerticalOptions="Center" 
+                                                SelectedItem="{Binding Status}"
+                                                ItemsSource="{Binding BindingContext.Status, Source={x:Reference listView}}"  
+                                                HorizontalOptions="Center">
+                            </core:SfChipGroup>
+
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfListView.ItemTemplate>
+
+                <syncfusion:SfListView.FooterTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10" Margin="5">
+                            <Button Text="Save" Command="{Binding BindingContext.SaveCommand, Source={x:Reference listView}}" WidthRequest="100" HeightRequest="40" />
+                            <Button Text="Delete" Command="{Binding BindingContext.DeleteCommand, Source={x:Reference listView}}" WidthRequest="100" HeightRequest="40"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </syncfusion:SfListView.FooterTemplate>
+            </syncfusion:SfListView>
+</ContentPage>
